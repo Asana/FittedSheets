@@ -106,7 +106,10 @@ public class SheetViewController: UIViewController {
             self.overlayTapView.isUserInteractionEnabled = !self.allowGestureThroughOverlay
         }
     }
-    
+
+    public static var enableGestureRecognizer: Bool = true
+    public var enableGestureRecognizer = SheetViewController.enableGestureRecognizer
+
     public static var cornerRadius: CGFloat = 12
     public var cornerRadius: CGFloat {
         get { return self.contentViewController.cornerRadius }
@@ -359,6 +362,8 @@ public class SheetViewController: UIViewController {
     }
     
     private func addPanGestureRecognizer() {
+      guard enableGestureRecognizer else { return }
+
         let panGestureRecognizer = InitialTouchPanGestureRecognizer(target: self, action: #selector(panned(_:)))
         self.view.addGestureRecognizer(panGestureRecognizer)
         panGestureRecognizer.delegate = self
