@@ -107,9 +107,6 @@ public class SheetViewController: UIViewController {
         }
     }
 
-    public static var enableGestureRecognizer: Bool = true
-    public var enableGestureRecognizer = SheetViewController.enableGestureRecognizer
-
     public static var cornerRadius: CGFloat = 12
     public var cornerRadius: CGFloat {
         get { return self.contentViewController.cornerRadius }
@@ -362,7 +359,7 @@ public class SheetViewController: UIViewController {
     }
     
     private func addPanGestureRecognizer() {
-      guard enableGestureRecognizer else { return }
+      guard options.enableGestureRecognizer else { return }
 
         let panGestureRecognizer = InitialTouchPanGestureRecognizer(target: self, action: #selector(panned(_:)))
         self.view.addGestureRecognizer(panGestureRecognizer)
@@ -380,12 +377,18 @@ public class SheetViewController: UIViewController {
         
         let minHeight: CGFloat = self.height(for: self.orderedSizes.first)
         let maxHeight: CGFloat
+
         if self.allowPullingPastMaxHeight {
-            maxHeight = self.height(for: .fullscreen) // self.view.bounds.height
+            if currentSize == .intrinsic {
+                let contentSize = max(self.height(for: self.orderedSizes.last) * 1.2, self.prePanHeight)
+                maxHeight = min(contentSize, self.height(for: .fullscreen))
+            } else {
+              maxHeight = self.height(for: .fullscreen) // self.view.bounds.height
+            }
         } else {
             maxHeight = max(self.height(for: self.orderedSizes.last), self.prePanHeight)
         }
-        
+
         var newHeight = max(0, self.prePanHeight + (self.firstPanPoint.y - point.y))
         var offset: CGFloat = 0
         if newHeight < minHeight {

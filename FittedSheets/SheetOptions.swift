@@ -24,6 +24,7 @@ public struct SheetOptions {
     public var presentingViewCornerRadius: CGFloat = 12
     public var shouldExtendBackground = true
     public var setIntrinsicHeightOnNavigationControllers = true
+    public var enableGestureRecognizer = true
 
     public var transitionAnimationOptions: UIView.AnimationOptions = [.curveEaseOut]
     public var transitionDampening: CGFloat = 0.7
@@ -59,7 +60,8 @@ public struct SheetOptions {
                 useInlineMode: Bool? = nil,
                 horizontalPadding: CGFloat? = nil,
                 maxWidth: CGFloat? = nil,
-                isRubberBandEnabled: Bool? = nil) {
+                isRubberBandEnabled: Bool? = nil,
+                enableGestureRecognizer: Bool? = nil) {
         let defaultOptions = SheetOptions.default
         self.pullBarHeight = pullBarHeight ?? defaultOptions.pullBarHeight
         self.presentingViewCornerRadius = presentingViewCornerRadius ?? defaultOptions.presentingViewCornerRadius
@@ -72,6 +74,7 @@ public struct SheetOptions {
         let maxWidth = maxWidth ?? defaultOptions.maxWidth
         self.maxWidth = maxWidth == 0 ? nil : maxWidth
         self.isRubberBandEnabled = isRubberBandEnabled ?? false
+        self.enableGestureRecognizer = enableGestureRecognizer ?? defaultOptions.enableGestureRecognizer
     }
     
     @available(*, unavailable, message: "cornerRadius, minimumSpaceAbovePullBar, gripSize and gripColor are now properties on SheetViewController. Use them instead.")
