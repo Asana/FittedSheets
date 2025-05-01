@@ -346,7 +346,8 @@ public class SheetViewController: UIViewController {
             
             $0.centerX.alignWithSuperview()
             self.contentViewHeightConstraint = $0.height.set(self.height(for: self.currentSize))
-            
+	    self.contentViewHeightConstraint.priority = UILayoutPriority(999)
+
             let top: CGFloat
             if (self.options.useFullScreenMode) {
                 top = 0
